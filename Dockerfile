@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=nvidia/cuda:12.2.2-cudnn8-devel-ubuntu20.04
+ARG BASE_IMAGE=nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04
 
 FROM $BASE_IMAGE
 
@@ -36,7 +36,18 @@ RUN apt-get update && \
         squashfs-tools \
         zstd \
         zlib1g \
-        zlib1g-dev
+        zlib1g-dev \
+        libbpf-dev \
+        libdbus-1-dev \
+        libhwloc-dev \
+        libibmad-dev \
+        libibumad-dev \
+        libfreeipmi-dev \
+        libmariadb-dev \
+        libnuma-dev \
+        libpam0g-dev \
+        libreadline-dev \
+        libgtk2.0-dev
 
 # Download Slurm
 RUN cd /usr/src && \
@@ -59,7 +70,7 @@ RUN cd /usr/src && \
 # Build deb packages for Slurm
 RUN cd /usr/src/slurm-${SLURM_VERSION} && \
     mk-build-deps -i debian/control -t "apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends -y" && \
-    debuild -b -uc -us
+    DEB_BUILD_OPTIONS="nostrip" debuild -b -uc -us
 
 ################################################################
 # RESULT

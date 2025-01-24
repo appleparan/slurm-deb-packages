@@ -22,15 +22,6 @@ jobs:
             push: false
             platforms: linux/amd64
             load: true
-            ubuntu_version: focal
-            pmix_version: 5.0.2
-            cuda_version: 12.2.2
-            build_args:
-              BASE_IMAGE=nvidia/cuda:12.2.2-cudnn8-devel-ubuntu20.04
-          - context: .
-            push: false
-            platforms: linux/amd64
-            load: true
             ubuntu_version: jammy
             pmix_version: 5.0.3
             cuda_version: 12.2.2
